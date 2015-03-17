@@ -5,11 +5,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import bank.server.datainterchange.AccountTarget;
-import bank.server.datainterchange.BankTarget;
-import bank.server.datainterchange.IExecutionTarget;
-import bank.server.datainterchange.QueryCommandBase;
-import bank.server.datainterchange.QueryResult;
+import bank.server.datainterchange.*;
 
 
 public class ServerApplication {
@@ -20,9 +16,9 @@ public class ServerApplication {
 		System.out.println("STARTING SERVER APPLICATION");
 		
 		Bank bank = new Bank();
-		
+		ServerSocket serverSocket;
 		try {
-			ServerSocket serverSocket = new ServerSocket(9999);
+			serverSocket = new ServerSocket(9999);
 			while(true){
 				
 				Socket socket = serverSocket.accept();
@@ -30,14 +26,16 @@ public class ServerApplication {
 				//handlingConnection(socket,bank);
 			
 			}
-			//socket.close();
+			//serverSocket.close(); // tbd
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}				
 		
+		
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	static void handlingConnection(Socket socket, Bank bank){
 		System.out.println("");
 		System.out.println("socket created");
@@ -48,12 +46,12 @@ public class ServerApplication {
 				while(!socket.isClosed()
 						&& !socket.isInputShutdown()
 						&& socket.isConnected()){
-						
+						System.out.println("getting inputstream");
 						ObjectInputStream oostream 
 							= new ObjectInputStream(socket.getInputStream());
 								
-						
-						QueryCommandBase query = (QueryCommandBase) oostream.readObject();
+						System.out.println("reading from objectIntputStream");
+						QueryCommandNew query = (QueryCommandNew) oostream.readObject();
 						System.out.println("Object received");
 						
 						if(query == null) {
@@ -61,27 +59,15 @@ public class ServerApplication {
 							break;
 						}
 						
-						QueryResult result = null;
-						
-						IExecutionTarget target = query.getExecutionTarget();
-						if(target instanceof AccountTarget){				
-							String number = ((AccountTarget) target).getNumber();
-							System.out.println("Request for Accountnr: " +number);
-							result = query.execute(bank.getAccount(number));
-							//System.out.println( (Double) query.getResult());
-							
-						}else if(target instanceof BankTarget){
-							System.out.println("bank request");
-							result = query.execute(bank);
-							
-						}
 						
 						System.out.println("Writing response");
 						ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+						QueryResult result = query.execute(bank);
 						out.writeObject(result);
 						out.flush();
 				}
-			}catch(Exception ex){				
+			}catch(Exception ex){
+				ex.printStackTrace();
 				System.out.println("closing server socket");
 			}
 		

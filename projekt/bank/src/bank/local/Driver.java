@@ -11,7 +11,7 @@ import java.net.Socket;
 
 public class Driver implements bank.BankDriver {
 	private bank.Bank bank = null;
-	private Repository repository;
+	private RepositoryNew repository;
 	Socket socket;
 
 	@Override
@@ -28,7 +28,7 @@ public class Driver implements bank.BankDriver {
 			}
 			
 			socket = new Socket(server, port);
-			repository = new Repository(socket);
+			//repository = new RepositoryNew(socket.getOutputStream(), socket.getInputStream());
 			System.out.println("connected...");
 		} catch (IOException e) {
 		}

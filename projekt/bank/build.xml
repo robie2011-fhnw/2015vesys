@@ -1,14 +1,13 @@
 <?xml version="1.0"?>
 <project name="bank" default="compile" basedir=".">
-
 	<property file="build.properties" />
+	<property name="tomcat.home" value="C:\data\portableapps\apache-tomcat-8.0.20"/>
+	<property name="classes.dir" value="${basedir}/bin"/>
 	
 	<path id="bank.class.path">
-<!--
 		<fileset dir="${lib.dir}">
 			<include name="*.jar" />
 		</fileset>
--->
 		<dirset dir="${bin.dir}"/>
 	</path>
 
@@ -50,6 +49,28 @@
 			<arg value="1234"/>
 			<classpath refid="bank.class.path"/>
 		</java>
+	</target>
+	
+	
+	<target name="httpServlet.objectexchange" depends="compile">
+		<war warfile="${basedir}/httpServletObjectExchange.war" webxml="${res.dir}/web.xml">
+			<classes dir="${bin.dir}" >
+				<include name="bank/server/*.class" />
+				<include name="bank/*.class" />
+				<include name="bank/server/datainterchange/*.class" />
+			</classes>
+		</war>
+	</target>
+	
+	<target name="HttpObjectExchangeServlet.deploy" depends="httpServlet.objectexchange">
+		<delete>
+			<fileset dir="${tomcat.home}/webapps">
+			    <include name="httpServletObjectExchange.war"/>
+			    <exclude name="exclude"/>
+			</fileset>
+		</delete>
+
+		<copy file="${basedir}/httpServletObjectExchange.war" todir="${tomcat.home}/webapps"/>
 	</target>
 	
 </project>
