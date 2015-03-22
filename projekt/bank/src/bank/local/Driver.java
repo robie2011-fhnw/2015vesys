@@ -5,48 +5,18 @@
 
 package bank.local;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-
+// Test Implementation. Use local bank
 public class Driver implements bank.BankDriver {
 	private bank.Bank bank = null;
-	private RepositoryNew repository;
-	Socket socket;
 
 	@Override
-	public void connect(String[] args) {
-		try {
-			String server = "localhost";
-			int port = 9999;
-			if(args.length>0){
-				server = args[0];
-			}
-			
-			if(args.length>1){
-				port = Integer.parseInt(args[1]);
-			}
-			
-			socket = new Socket(server, port);
-			//repository = new RepositoryNew(socket.getOutputStream(), socket.getInputStream());
-			System.out.println("connected...");
-		} catch (IOException e) {
-		}
-		
-		bank = repository.getBank();
-		
+	public void connect(String[] args) {				
+		bank = new Bank();		
 	}
 
 	@Override
 	public void disconnect() {
-		bank = null;
-		try {
-			new ObjectOutputStream(socket.getOutputStream()).writeObject(null);
-			socket.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	
+		bank = null;			
 		System.out.println("disconnected...");
 	}
 

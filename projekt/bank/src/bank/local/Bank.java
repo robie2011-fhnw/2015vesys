@@ -1,4 +1,4 @@
-package bank.server;
+package bank.local;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -10,7 +10,7 @@ import bank.InactiveException;
 import bank.OverdrawException;
 
 
-public class Bank implements bank.IBankExtended {
+public class Bank implements bank.Bank {
 	private int lastAccountId = 0;
 	
 	private final Map<String, Account> accounts = new HashMap<>();

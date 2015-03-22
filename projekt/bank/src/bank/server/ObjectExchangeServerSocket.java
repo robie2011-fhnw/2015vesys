@@ -5,6 +5,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import bank.local.Bank;
 import bank.server.datainterchange.*;
 
 // Uebung 01

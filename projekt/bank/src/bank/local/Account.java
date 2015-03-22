@@ -1,4 +1,4 @@
-package bank.server;
+package bank.local;
 
 import java.io.Serializable;
 
