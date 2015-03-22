@@ -38,9 +38,8 @@ public class Account implements bank.Account, Serializable {
 
 	@Override
 	public void deposit(double amount) throws InactiveException {
-		// exception for negative amount?
 		if(!isActive()) throw new InactiveException();
-		if(amount<0) throw new InactiveException("amount can not be negativ");
+		if(amount<0) throw new IllegalArgumentException("amount can not be negativ");
 		
 		balance += amount;
 	}
@@ -49,12 +48,12 @@ public class Account implements bank.Account, Serializable {
 	public void withdraw(double amount) throws InactiveException, OverdrawException {
 		if(!isActive()) throw new InactiveException();
 		if(getBalance()<amount) throw new OverdrawException();
-		if(amount<0) throw new OverdrawException("amount can not be negativ");
+		if(amount<0) throw new IllegalArgumentException("amount can not be negativ");
 		
 		balance -= amount;
 	}
 	
-	protected void makeInactive(){
+	void makeInactive(){
 		this.active = false;
 	}
 }

@@ -42,8 +42,6 @@ public class Driver implements bank.BankDriver {
 		bank = null;
 		try {
 			new ObjectOutputStream(socket.getOutputStream()).writeObject(null);
-			socket.shutdownOutput();
-			socket.shutdownInput();
 			socket.close();
 		} catch (IOException e) {
 			e.printStackTrace();

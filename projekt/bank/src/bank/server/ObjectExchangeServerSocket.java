@@ -7,10 +7,8 @@ import java.net.Socket;
 
 import bank.server.datainterchange.*;
 
-
-public class ServerApplication {
-	
-	
+// Uebung 01
+public class ObjectExchangeServerSocket {	
 
 	public static void main(String[] args) {
 		System.out.println("STARTING SERVER APPLICATION");
@@ -20,11 +18,8 @@ public class ServerApplication {
 		try {
 			serverSocket = new ServerSocket(9999);
 			while(true){
-				
 				Socket socket = serverSocket.accept();
-				new Thread( () -> handlingConnection(socket,bank) ).start();;
-				//handlingConnection(socket,bank);
-			
+				new Thread( () -> handlingConnection(socket,bank) ).start();
 			}
 			//serverSocket.close(); // tbd
 		} catch (Exception e) {
@@ -43,15 +38,19 @@ public class ServerApplication {
 		
 		
 		try{
+			
+			ObjectInputStream objectInputStream = null;
+			ObjectOutputStream objectOutputStream = null;
+			
 				while(!socket.isClosed()
 						&& !socket.isInputShutdown()
 						&& socket.isConnected()){
 						System.out.println("getting inputstream");
-						ObjectInputStream oostream 
-							= new ObjectInputStream(socket.getInputStream());
+						if(objectInputStream == null)
+							objectInputStream = new ObjectInputStream(socket.getInputStream());
 								
 						System.out.println("reading from objectIntputStream");
-						QueryCommandNew query = (QueryCommandNew) oostream.readObject();
+						QueryCommandNew query = (QueryCommandNew) objectInputStream.readObject();
 						System.out.println("Object received");
 						
 						if(query == null) {
@@ -61,10 +60,12 @@ public class ServerApplication {
 						
 						
 						System.out.println("Writing response");
-						ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+						
+						if(objectOutputStream == null)
+							objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 						QueryResult result = query.execute(bank);
-						out.writeObject(result);
-						out.flush();
+						objectOutputStream.writeObject(result);
+						//objectOutputStream.flush();
 				}
 			}catch(Exception ex){
 				ex.printStackTrace();

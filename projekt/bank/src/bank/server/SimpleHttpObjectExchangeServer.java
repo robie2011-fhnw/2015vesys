@@ -1,11 +1,10 @@
-package bank.server.sockets.simplehttp;
+package bank.server;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 
-import bank.server.Bank;
 import bank.server.datainterchange.QueryCommandNew;
 import bank.server.datainterchange.QueryResult;
 
@@ -14,12 +13,12 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
-public class SimpleHttpServer {
+public class SimpleHttpObjectExchangeServer {
 	public static void main(String[] args) throws IOException {
 		System.out.println("starting SimpleHttpServer");
 		Bank bank = new Bank();
 		
-		HttpServer s = HttpServer.create(new InetSocketAddress(8080), 0);
+		HttpServer s = HttpServer.create(new InetSocketAddress(9999), 0);
 		HttpContext context = s.createContext("/httpServletObjectExchange/oex", new BankHandler(bank));
 		System.out.println("/bank registred");		
 		s.start();
@@ -53,15 +52,17 @@ public class SimpleHttpServer {
 			QueryCommandNew query = null;
 			try {
 				query = (QueryCommandNew) objectInputStream.readObject();
+				System.out.println("Object received");
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("Object received");
 			
 			System.out.println("Writing response");
 			ObjectOutputStream out = new ObjectOutputStream(arg0.getResponseBody());
-			QueryResult result = query.execute(bank);
+			
+			QueryResult result = null;
+			if(query != null) result = query.execute(bank);
+			
 			out.writeObject(result);
 			out.close();
 			

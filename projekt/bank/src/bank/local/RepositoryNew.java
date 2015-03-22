@@ -160,6 +160,8 @@ public class RepositoryNew {
 				}else if(exception instanceof IOException){
 					throw (IOException) exception;
 				}
+				
+				throw (RuntimeException) exception;
 			}
 		}
 
@@ -188,7 +190,9 @@ public class RepositoryNew {
 					throw (IOException) exception;
 				}else if(exception instanceof OverdrawException){
 					throw (OverdrawException) exception;
-				}
+				}else{
+					throw (RuntimeException) exception;
+				}				
 			}
 		}
 

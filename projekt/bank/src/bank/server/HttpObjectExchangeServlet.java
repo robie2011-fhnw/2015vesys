@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import bank.server.datainterchange.QueryCommandNew;
 import bank.server.datainterchange.QueryResult;
 
+// does not work; Uebung 01
 public class HttpObjectExchangeServlet extends HttpServlet {
 	Bank bank = new Bank();
 	
