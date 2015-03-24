@@ -73,4 +73,39 @@
 		<copy file="${basedir}/httpServletObjectExchange.war" todir="${tomcat.home}/webapps"/>
 	</target>
 	
+	<target name="soap.exportClasses" depends="compile">
+	   <exec executable="wsgen">
+	        <arg line="-cp bin -s src -d bin bank.local.SimpleBankAccess"/>
+	    </exec>
+	</target>
+	
+	<target name="soap.importFromWsdlService">
+		<echo>Waiting for WSDL Service to be available ... max 1min</echo>
+		<waitfor maxwait="1" maxwaitunit="minute">
+			<http url="http://127.0.0.1:8888/bank?wsdl"/>
+		</waitfor>
+		<exec executable="wsimport">
+			<arg line="-p bank.client.jaxws -d bin -s src http://127.0.0.1:8888/bank?wsdl" />
+		</exec>
+	</target>
+	
+	
+	<target name="run.soapBankService" depends="soap.exportClasses">
+		<java classname="bank.server.SimpleBankAccessWSDLServicePublisher" fork="true" dir=".">
+			<classpath refid="bank.class.path"/>
+		</java>
+	</target>
+
+	
+	<target name="run.client.soap">
+		<echo>Waiting for WSDL Service to be available ... max 1min</echo>
+		<waitfor maxwait="1" maxwaitunit="minute">
+			<http url="http://127.0.0.1:8888/bank?wsdl"/>
+		</waitfor>
+	
+		<java classname="bank.Client" fork="yes" dir=".">
+			<arg value="bank.client.SoapBankServiceDriver"/>
+			<classpath refid="bank.class.path"/>
+		</java>
+	</target>
 </project>

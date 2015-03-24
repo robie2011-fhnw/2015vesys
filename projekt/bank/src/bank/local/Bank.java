@@ -16,7 +16,7 @@ public class Bank implements bank.IBank {
 	private final Map<String, Account> accounts = new HashMap<>();
 
 	private synchronized int getNewAccountNumber(){
-		return lastAccountId++;
+		return ++lastAccountId;
 	}
 	
 	public Bank() {

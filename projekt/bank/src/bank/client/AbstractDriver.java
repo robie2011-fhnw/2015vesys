@@ -21,13 +21,17 @@ public abstract class AbstractDriver implements bank.IBankDriver {
 	}
 	
 	@Override
-	public abstract void connect(String[] args);
+	public void connect(String[] args){
+		System.out.println("connecting client ...");
+		repository = new Repository(getTransmitter());
+	}
 
 	@Override
-	public abstract void disconnect();
+	public void disconnect(){ System.out.println("disconnecting client"); }
 
-	@Override
-	public abstract IBank getBank();
+	public IBank getBank(){
+		return bank;
+	}
 
 	abstract IConnection getTransmitter();
 }
