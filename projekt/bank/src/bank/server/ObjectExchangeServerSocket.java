@@ -51,7 +51,7 @@ public class ObjectExchangeServerSocket {
 							objectInputStream = new ObjectInputStream(socket.getInputStream());
 								
 						System.out.println("reading from objectIntputStream");
-						QueryCommandNew query = (QueryCommandNew) objectInputStream.readObject();
+						QueryCommand query = (QueryCommand) objectInputStream.readObject();
 						System.out.println("Object received");
 						
 						if(query == null) {

@@ -2,11 +2,11 @@ package bank.client;
 
 import bank.IBank;
 import bank.IConnection;
-import bank.local.RepositoryNew;
+import bank.local.Repository;
 
 public abstract class AbstractDriver implements bank.IBankDriver {
 	protected bank.IBank bank = null;
-	protected RepositoryNew repository;
+	protected Repository repository;
 	
 	public String[] getDefaultParams(String[] args){
 		String server = "localhost";

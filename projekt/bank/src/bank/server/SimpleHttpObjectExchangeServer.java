@@ -6,7 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 
 import bank.local.Bank;
-import bank.server.datainterchange.QueryCommandNew;
+import bank.server.datainterchange.QueryCommand;
 import bank.server.datainterchange.QueryResult;
 
 import com.sun.net.httpserver.HttpContext;
@@ -50,9 +50,9 @@ public class SimpleHttpObjectExchangeServer {
 
 			ObjectInputStream objectInputStream = new ObjectInputStream(arg0.getRequestBody());
 			
-			QueryCommandNew query = null;
+			QueryCommand query = null;
 			try {
-				query = (QueryCommandNew) objectInputStream.readObject();
+				query = (QueryCommand) objectInputStream.readObject();
 				System.out.println("Object received");
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();

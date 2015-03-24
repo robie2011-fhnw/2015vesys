@@ -8,12 +8,12 @@ import bank.IBank;
 import bank.IConnection;
 import bank.InactiveException;
 import bank.OverdrawException;
-import bank.server.datainterchange.QueryCommandNew;
+import bank.server.datainterchange.QueryCommand;
 import bank.server.datainterchange.QueryResult;
 
-public class RepositoryNew {
+public class Repository {
 	private IConnection connection;
-	public RepositoryNew(IConnection con){
+	public Repository(IConnection con){
 		try{
 			this.connection = con;
 		}catch(Exception e){ 
@@ -24,7 +24,7 @@ public class RepositoryNew {
 		
 	<TResult>
 	QueryResult<TResult>
-	executeRemoteQuery(QueryCommandNew<TResult> query){
+	executeRemoteQuery(QueryCommand<TResult> query){
 		System.out.println("execute remote query");		
 		return connection.executeRemoteQuery(query);
 	}
@@ -39,8 +39,8 @@ public class RepositoryNew {
 		@Override
 		public String createAccount(String owner) throws IOException {
 			System.out.println("remote call createAccount");
-			QueryCommandNew<String> query 
-				= new QueryCommandNew<String>(bank -> bank.createAccount(owner));
+			QueryCommand<String> query 
+				= new QueryCommand<String>(bank -> bank.createAccount(owner));
 			
 			return executeRemoteQuery(query).getResult();
 		}
@@ -48,24 +48,24 @@ public class RepositoryNew {
 		@Override
 		public boolean closeAccount(String number) throws IOException {
 			System.out.println("remote call closeAccount");
-			QueryCommandNew<Boolean> query 
-				= new QueryCommandNew<Boolean>(bank -> bank.closeAccount(number));
+			QueryCommand<Boolean> query 
+				= new QueryCommand<Boolean>(bank -> bank.closeAccount(number));
 			return executeRemoteQuery(query).getResult();
 		}
 
 		@Override
 		public Set<String> getAccountNumbers() throws IOException {
 			System.out.println("remote call getAccountNumbers");
-			QueryCommandNew<Set<String>> query 
-				= new QueryCommandNew<Set<String>>(bank -> bank.getAccountNumbers());
+			QueryCommand<Set<String>> query 
+				= new QueryCommand<Set<String>>(bank -> bank.getAccountNumbers());
 			return executeRemoteQuery(query).getResult();
 		}
 
 		@Override
 		public IAccount getAccount(String number) throws IOException {
 			System.out.println("remote call getAccount");
-			QueryCommandNew<IAccount> query 
-				= new QueryCommandNew<IAccount>(bank -> bank.getAccount(number));
+			QueryCommand<IAccount> query 
+				= new QueryCommand<IAccount>(bank -> bank.getAccount(number));
 			IAccount account = executeRemoteQuery(query).getResult();
 			if(account == null) return null;
 			return new RemoteAccount(account);
@@ -81,7 +81,7 @@ public class RepositoryNew {
 			accountA = a.getNumber();
 			accountB = b.getNumber();
 			
-			QueryCommandNew<Boolean> query = new QueryCommandNew<Boolean>(bank -> {
+			QueryCommand<Boolean> query = new QueryCommand<Boolean>(bank -> {
 				IAccount tmpA = bank.getAccount(accountA);
 				IAccount tmpB = bank.getAccount(accountB);
 				bank.transfer(tmpA, tmpB, amount);
@@ -129,8 +129,8 @@ public class RepositoryNew {
 		public boolean isActive() throws IOException {
 			System.out.println("client/account: remote call isActive()");
 			String accountNr = getNumber();
-			QueryCommandNew<Boolean> query 
-				= new QueryCommandNew<Boolean>(bank -> bank.getAccount(accountNr).isActive());
+			QueryCommand<Boolean> query 
+				= new QueryCommand<Boolean>(bank -> bank.getAccount(accountNr).isActive());
 			
 			return executeRemoteQuery(query).getResult();
 		}
@@ -141,8 +141,8 @@ public class RepositoryNew {
 			System.out.println("client/account: remote call deposite()");
 
 			String accountNr = getNumber();
-			QueryCommandNew<Boolean> query 
-				= new QueryCommandNew<Boolean>(bank -> {
+			QueryCommand<Boolean> query 
+				= new QueryCommand<Boolean>(bank -> {
 							bank.getAccount(accountNr)
 								.deposit(amount);
 							return true;
@@ -170,8 +170,8 @@ public class RepositoryNew {
 				IllegalArgumentException, OverdrawException, InactiveException {
 			
 			String accountNr = getNumber();
-			QueryCommandNew<Boolean> query 
-				= new QueryCommandNew<Boolean>(bank -> {
+			QueryCommand<Boolean> query 
+				= new QueryCommand<Boolean>(bank -> {
 							bank.getAccount(accountNr)
 								.withdraw(amount);
 							return true;
@@ -200,8 +200,8 @@ public class RepositoryNew {
 		public double getBalance() throws IOException {
 			System.out.println("client/account: remote call getBalance()");
 			String accountNr = getNumber();
-			QueryCommandNew<Double> query 
-				= new QueryCommandNew<Double>(bank -> bank.getAccount(accountNr).getBalance());
+			QueryCommand<Double> query 
+				= new QueryCommand<Double>(bank -> bank.getAccount(accountNr).getBalance());
 			
 			return executeRemoteQuery(query).getResult();
 		}

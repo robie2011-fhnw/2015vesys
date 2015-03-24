@@ -6,8 +6,8 @@ import java.net.URL;
 
 import sun.net.www.protocol.http.HttpURLConnection;
 import bank.IConnection;
-import bank.local.RepositoryNew;
-import bank.server.datainterchange.QueryCommandNew;
+import bank.local.Repository;
+import bank.server.datainterchange.QueryCommand;
 import bank.server.datainterchange.QueryResult;
 
 public class HttpDriver extends AbstractDriver {
@@ -19,7 +19,7 @@ public class HttpDriver extends AbstractDriver {
 		server = args[0];
 		port = args[1];		
 		handler = (args.length>2) ? args[2] : "/httpServletObjectExchange/oex";
-		repository = new RepositoryNew(getTransmitter());		
+		repository = new Repository(getTransmitter());		
 		bank = repository.getBank();		
 	}
 
@@ -40,7 +40,7 @@ public class HttpDriver extends AbstractDriver {
 			
 			@Override
 			public <TResult> QueryResult<TResult> executeRemoteQuery(
-					QueryCommandNew<TResult> query) {
+					QueryCommand<TResult> query) {
 				try{			
 					URL url = new URL("http://" +server +":" +port + handler);
 					HttpURLConnection con = (HttpURLConnection) url.openConnection();

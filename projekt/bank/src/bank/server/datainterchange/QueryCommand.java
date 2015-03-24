@@ -4,10 +4,10 @@ import java.io.Serializable;
 
 import bank.IBank;
 
-public class QueryCommandNew<TResult> implements Serializable {
+public class QueryCommand<TResult> implements Serializable {
 	ICommandNew<TResult> command;
 
-	public QueryCommandNew(ICommandNew<TResult> cmd){
+	public QueryCommand(ICommandNew<TResult> cmd){
 		this.command = cmd;
 	}
 		

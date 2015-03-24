@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bank.local.Bank;
-import bank.server.datainterchange.QueryCommandNew;
+import bank.server.datainterchange.QueryCommand;
 import bank.server.datainterchange.QueryResult;
 
 // does not work; Uebung 01
@@ -19,9 +19,9 @@ public class HttpObjectExchangeServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		QueryCommandNew query = null;
+		QueryCommand query = null;
 		try {
-			query = (QueryCommandNew)  new ObjectInputStream(req.getInputStream()).readObject();
+			query = (QueryCommand)  new ObjectInputStream(req.getInputStream()).readObject();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

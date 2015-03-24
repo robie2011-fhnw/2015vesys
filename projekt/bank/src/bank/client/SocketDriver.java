@@ -7,8 +7,8 @@ import java.net.Socket;
 
 import bank.IBank;
 import bank.IConnection;
-import bank.local.RepositoryNew;
-import bank.server.datainterchange.QueryCommandNew;
+import bank.local.Repository;
+import bank.server.datainterchange.QueryCommand;
 import bank.server.datainterchange.QueryResult;
 
 public class SocketDriver extends AbstractDriver {
@@ -21,7 +21,7 @@ public class SocketDriver extends AbstractDriver {
 		args = getDefaultParams(args);
 		try {
 			socket = new Socket(args[0], Integer.parseInt(args[1]));
-			repository = new RepositoryNew(getTransmitter());
+			repository = new Repository(getTransmitter());
 		} catch (NumberFormatException | IOException e) {
 			e.printStackTrace();
 		}
@@ -33,7 +33,7 @@ public class SocketDriver extends AbstractDriver {
 			@SuppressWarnings({ "rawtypes", "unchecked" })
 			@Override
 			public <TResult> QueryResult<TResult> executeRemoteQuery(
-					QueryCommandNew<TResult> query) {
+					QueryCommand<TResult> query) {
 				try {
 					
 					System.out.println("Client write object into socket");
