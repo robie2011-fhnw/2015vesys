@@ -10,7 +10,7 @@ import bank.InactiveException;
 import bank.OverdrawException;
 
 
-public class Bank implements bank.Bank {
+public class Bank implements bank.IBank {
 	private int lastAccountId = 0;
 	
 	private final Map<String, Account> accounts = new HashMap<>();
@@ -61,12 +61,12 @@ public class Bank implements bank.Bank {
 	}
 
 	@Override
-	public bank.Account getAccount(String number) {
+	public bank.IAccount getAccount(String number) {
 		return accounts.get(number);
 	}
 	
 	@Override
-	public void transfer(bank.Account from, bank.Account to, double amount)
+	public void transfer(bank.IAccount from, bank.IAccount to, double amount)
 			throws IOException, InactiveException, OverdrawException {
 		
 		if(!from.isActive() || !to.isActive()) throw new InactiveException();

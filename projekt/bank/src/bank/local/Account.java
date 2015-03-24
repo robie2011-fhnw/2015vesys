@@ -5,7 +5,7 @@ import java.io.Serializable;
 import bank.InactiveException;
 import bank.OverdrawException;
 
-public class Account implements bank.Account, Serializable {
+public class Account implements bank.IAccount, Serializable {
 	private String number;
 	private String owner;
 	private double balance;

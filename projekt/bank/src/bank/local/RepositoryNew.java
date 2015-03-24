@@ -3,11 +3,11 @@ package bank.local;
 import java.io.IOException;
 import java.util.Set;
 
-import bank.Account;
-import bank.Bank;
+import bank.IAccount;
+import bank.IBank;
+import bank.IConnection;
 import bank.InactiveException;
 import bank.OverdrawException;
-import bank.client.IConnection;
 import bank.server.datainterchange.QueryCommandNew;
 import bank.server.datainterchange.QueryResult;
 
@@ -29,12 +29,12 @@ public class RepositoryNew {
 		return connection.executeRemoteQuery(query);
 	}
 	
-	public Bank getBank(){
+	public IBank getBank(){
 		return new RemoteBank();
 	}
 
 	
-	class RemoteBank implements bank.Bank{
+	class RemoteBank implements bank.IBank{
 
 		@Override
 		public String createAccount(String owner) throws IOException {
@@ -62,17 +62,17 @@ public class RepositoryNew {
 		}
 
 		@Override
-		public Account getAccount(String number) throws IOException {
+		public IAccount getAccount(String number) throws IOException {
 			System.out.println("remote call getAccount");
-			QueryCommandNew<Account> query 
-				= new QueryCommandNew<Account>(bank -> bank.getAccount(number));
-			Account account = executeRemoteQuery(query).getResult();
+			QueryCommandNew<IAccount> query 
+				= new QueryCommandNew<IAccount>(bank -> bank.getAccount(number));
+			IAccount account = executeRemoteQuery(query).getResult();
 			if(account == null) return null;
 			return new RemoteAccount(account);
 		}
 
 		@Override
-		public void transfer(Account a, Account b, double amount)
+		public void transfer(IAccount a, IAccount b, double amount)
 									throws IOException, IllegalArgumentException,
 									OverdrawException, InactiveException {
 			System.out.println("remote call transfer");
@@ -82,8 +82,8 @@ public class RepositoryNew {
 			accountB = b.getNumber();
 			
 			QueryCommandNew<Boolean> query = new QueryCommandNew<Boolean>(bank -> {
-				Account tmpA = bank.getAccount(accountA);
-				Account tmpB = bank.getAccount(accountB);
+				IAccount tmpA = bank.getAccount(accountA);
+				IAccount tmpB = bank.getAccount(accountB);
 				bank.transfer(tmpA, tmpB, amount);
 				return false;
 			});
@@ -108,10 +108,10 @@ public class RepositoryNew {
 									
 	}
 	
-	class RemoteAccount implements bank.Account{
-		bank.Account account;		
+	class RemoteAccount implements bank.IAccount{
+		bank.IAccount account;		
 		
-		public RemoteAccount(bank.Account account) {
+		public RemoteAccount(bank.IAccount account) {
 			this.account = account;
 		}
 

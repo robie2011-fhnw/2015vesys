@@ -2,9 +2,9 @@ package bank.server.datainterchange;
 
 import java.io.Serializable;
 
-import bank.Bank;
+import bank.IBank;
 
 @FunctionalInterface
 public interface ICommandNew<TResult> extends Serializable{
-	TResult run(Bank bank) throws Exception;
+	TResult run(IBank bank) throws Exception;
 }

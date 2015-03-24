@@ -11,12 +11,12 @@ import java.io.IOException;
  * The BankDriver interface is used to access a particular bank. The client
  * program first calls connect over this interface and then requests the bank.
  * 
- * @see Bank
+ * @see IBank
  * @author Dominik Gruntz
  * @version 3.0
  */
 
-public interface BankDriver {
+public interface IBankDriver {
 
 	/**
 	 * Connects to an implementation of a bank. Parameters which designate e.g.
@@ -44,7 +44,7 @@ public interface BankDriver {
 	 * @return the bank to which this driver instance has been connected.
 	 * 
 	 * @see #connect
-	 * @see Bank
+	 * @see IBank
 	 */
-	Bank getBank();
+	IBank getBank();
 }

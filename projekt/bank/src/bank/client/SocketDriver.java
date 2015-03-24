@@ -5,7 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import bank.Bank;
+import bank.IBank;
+import bank.IConnection;
 import bank.local.RepositoryNew;
 import bank.server.datainterchange.QueryCommandNew;
 import bank.server.datainterchange.QueryResult;
@@ -68,7 +69,7 @@ public class SocketDriver extends AbstractDriver {
 	}
 
 	@Override
-	public Bank getBank() {
+	public IBank getBank() {
 		return repository.getBank();
 	}
 

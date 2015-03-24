@@ -6,8 +6,8 @@
 package bank.local;
 
 // Test Implementation. Use local bank
-public class Driver implements bank.BankDriver {
-	private bank.Bank bank = null;
+public class Driver implements bank.IBankDriver {
+	private bank.IBank bank = null;
 
 	@Override
 	public void connect(String[] args) {				
@@ -21,7 +21,7 @@ public class Driver implements bank.BankDriver {
 	}
 
 	@Override
-	public bank.Bank getBank() {
+	public bank.IBank getBank() {
 		return bank;
 	}
 

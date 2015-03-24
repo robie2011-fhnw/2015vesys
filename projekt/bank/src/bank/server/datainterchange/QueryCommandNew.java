@@ -2,7 +2,7 @@ package bank.server.datainterchange;
 
 import java.io.Serializable;
 
-import bank.Bank;
+import bank.IBank;
 
 public class QueryCommandNew<TResult> implements Serializable {
 	ICommandNew<TResult> command;
@@ -11,7 +11,7 @@ public class QueryCommandNew<TResult> implements Serializable {
 		this.command = cmd;
 	}
 		
-	public QueryResult<TResult> execute(Bank bank){
+	public QueryResult<TResult> execute(IBank bank){
 		TResult result = null;
 		Exception exception = null;
 		try{

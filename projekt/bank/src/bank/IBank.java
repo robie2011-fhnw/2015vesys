@@ -13,11 +13,11 @@ import java.util.Set;
  * this interface, new accounts can be created and existing accounts can be
  * closed.
  * 
- * @see Account
+ * @see IAccount
  * @author Dominik Gruntz
  * @version 3.0
  */
-public interface Bank {
+public interface IBank {
 
 	/**
 	 * Creates a new account. As result, the method returns the account number
@@ -70,7 +70,7 @@ public interface Bank {
 	 *         if such an account was never created and does not exist.
 	 * @throws IOException if a remoting or communication problem occurs
 	 */
-	Account getAccount(String number) throws IOException;
+	IAccount getAccount(String number) throws IOException;
 
 	/**
 	 * Transfers the given amount from account a to account b.
@@ -85,7 +85,7 @@ public interface Bank {
 	 * @throws IllegalArgumentException if the argument is negative
 	 * @throws IOException if a remoting or communication problem occurs
 	 */
-	void transfer(Account a, Account b, double amount)
+	void transfer(IAccount a, IAccount b, double amount)
 			throws IOException, IllegalArgumentException, OverdrawException,
 			InactiveException;
 }

@@ -1,4 +1,4 @@
-package bank.client;
+package bank;
 
 import bank.server.datainterchange.QueryCommandNew;
 import bank.server.datainterchange.QueryResult;

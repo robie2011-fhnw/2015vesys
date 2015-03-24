@@ -5,6 +5,7 @@ import java.io.ObjectOutputStream;
 import java.net.URL;
 
 import sun.net.www.protocol.http.HttpURLConnection;
+import bank.IConnection;
 import bank.local.RepositoryNew;
 import bank.server.datainterchange.QueryCommandNew;
 import bank.server.datainterchange.QueryResult;
@@ -29,7 +30,7 @@ public class HttpDriver extends AbstractDriver {
 	}
 
 	@Override
-	public bank.Bank getBank() {
+	public bank.IBank getBank() {
 		return bank;
 	}
 
