@@ -37,7 +37,7 @@ public class SimpleHttpObjectExchangeServer {
 		@SuppressWarnings("rawtypes")
 		@Override
 		public void handle(HttpExchange arg0) throws IOException {
-			arg0.getResponseHeaders().add("Content-Type", "text/html");
+			arg0.getResponseHeaders().add("Content-Type", "application/x-bank");
 			arg0.sendResponseHeaders(200, 0);
 			System.out.println("call handle");
 			System.out.println(arg0.getRequestMethod());
