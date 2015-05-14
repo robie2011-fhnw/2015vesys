@@ -33,5 +33,8 @@ public abstract class AbstractDriver implements bank.BankDriver {
 		return bank;
 	}
 
-	abstract Connection getTransmitter();
+	Connection getTransmitter()
+	{
+		return null;
+	}
 }
