@@ -47,10 +47,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
-import bank.IAccount;
-import bank.IBank;
-import bank.IBankDriver;
-import bank.IBankDriver2;
+import bank.Account;
+import bank.Bank;
+import bank.BankDriver;
+import bank.BankDriver2;
 import bank.InactiveException;
 import bank.OverdrawException;
 import bank.gui.tests.BankTest;
@@ -58,11 +58,11 @@ import bank.gui.tests.BankTest;
 
 public class BankGUI extends JFrame {
 
-	private IBankDriver driver;
-	private IBank bank;
+	private BankDriver driver;
+	private Bank bank;
 
 	private JComboBox<String> accountcombo = new JComboBox<String>();
-	private Map<String, IAccount> accounts = new HashMap<String,IAccount>();
+	private Map<String, Account> accounts = new HashMap<String,Account>();
 
 	private JTextField fld_owner   = new JTextField();
 	private JTextField fld_balance = new JTextField();
@@ -95,14 +95,14 @@ public class BankGUI extends JFrame {
 	}
 	
 
-	public BankGUI(IBankDriver server) {
+	public BankGUI(BankDriver server) {
 		this.driver = server;
 		this.bank   = server.getBank();
 		
-		if(server instanceof IBankDriver2) {
+		if(server instanceof BankDriver2) {
 			final AtomicBoolean refreshRegistered = new AtomicBoolean(false);
 			try {
-				((IBankDriver2)server).registerUpdateHandler(new IBankDriver2.UpdateHandler(){
+				((BankDriver2)server).registerUpdateHandler(new BankDriver2.UpdateHandler(){
 					@Override
 					public void accountChanged(String number) {
 						if(refreshRegistered.compareAndSet(false, true)) {
@@ -247,7 +247,7 @@ public class BankGUI extends JFrame {
 		p.add(new JLabel(""), BorderLayout.NORTH);
 		p.add(center,         BorderLayout.CENTER);
 		p.add(east,           BorderLayout.EAST);
-		if(! (driver instanceof IBankDriver2)) {
+		if(! (driver instanceof BankDriver2)) {
 			p.add(btn_refresh,    BorderLayout.SOUTH);
 		} else {
 			p.add(new JLabel(""), BorderLayout.SOUTH);
@@ -318,7 +318,7 @@ public class BankGUI extends JFrame {
 			}
 			else {
 				try {
-					IAccount acc = bank.getAccount(number);
+					Account acc = bank.getAccount(number);
 					accounts.put(number, acc);
 
 					String str = addaccount.getBalance().trim();
@@ -382,7 +382,7 @@ public class BankGUI extends JFrame {
 		    if (s!=null) {
 			    try  {
 					double amount = Double.parseDouble(s);
-					IAccount a = accounts.get(number);
+					Account a = accounts.get(number);
 					a.deposit(amount);
 					fld_balance.setText(currencyFormat(a.getBalance()));
 			    }
@@ -413,7 +413,7 @@ public class BankGUI extends JFrame {
 	    	if (s!=null) {
 		    	try {
 					double amount = Double.parseDouble(s);
-					IAccount a = accounts.get(number);
+					Account a = accounts.get(number);
 					a.withdraw(amount);
 	    			fld_balance.setText(currencyFormat(a.getBalance()));
 		    	}
@@ -462,8 +462,8 @@ public class BankGUI extends JFrame {
 			    	else {
 						try {
 							double amount = Double.parseDouble(trans.getBalance());
-							IAccount from = accounts.get(number);
-							IAccount to   = accounts.get(trans.getAccountNumber());
+							Account from = accounts.get(number);
+							Account to   = accounts.get(trans.getAccountNumber());
 							bank.transfer(from, to, amount);
 							
 							// after transfer adjust value of displayed account
@@ -556,7 +556,7 @@ public class BankGUI extends JFrame {
 		String nr = currentAccountNumber();
 		try{
 			if(nr != null){
-				IAccount a = accounts.get(nr);
+				Account a = accounts.get(nr);
 				if(a != null){
 					fld_owner.setText(a.getOwner());
 					fld_balance.setText(currencyFormat(a.getBalance()));

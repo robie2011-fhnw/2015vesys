@@ -3,16 +3,16 @@ package bank.local;
 import java.io.IOException;
 import java.util.Set;
 import javax.jws.WebService;
-import bank.IAccount;
-import bank.IBank;
-import bank.ISimpleBankAccess;
+import bank.Account;
+import bank.Bank;
+import bank.SimpleBankAccess;
 import bank.InactiveException;
 import bank.OverdrawException;
 
 @WebService
-public class SimpleBankAccess implements ISimpleBankAccess {
+public class SimpleBankAccessImpl implements SimpleBankAccess {
 	
-	public static IBank bank;
+	public static Bank bank;
 
 	//public SimpleBankAccess(IBank bank){ this.bank = bank; }
 	/**
@@ -39,15 +39,15 @@ public class SimpleBankAccess implements ISimpleBankAccess {
 
 	@Override
 	public boolean accountExists(String number) throws IOException {
-		IAccount account = bank.getAccount(number);
+		Account account = bank.getAccount(number);
 		return account != null;
 	}
 
 	@Override
 	public void transfer(String a, String b, double amount) throws IOException,
 			IllegalArgumentException, OverdrawException, InactiveException {
-		IAccount accountA = bank.getAccount(a);
-		IAccount accountB = bank.getAccount(b);
+		Account accountA = bank.getAccount(a);
+		Account accountB = bank.getAccount(b);
 		bank.transfer(accountA,accountB, amount);
 	}
 

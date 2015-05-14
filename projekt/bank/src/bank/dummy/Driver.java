@@ -9,9 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import bank.IAccount;
-import bank.IBank;
-import bank.IBankDriver;
+import bank.Account;
+import bank.Bank;
+import bank.BankDriver;
 
 /*
 * This class implements a dummy driver which can be used to start and test
@@ -23,8 +23,8 @@ import bank.IBankDriver;
 */
 
 
-public class Driver implements IBankDriver {
-	private IBank bank = null;
+public class Driver implements BankDriver {
+	private Bank bank = null;
 
 	@Override
 	public void connect(String[] args){
@@ -39,13 +39,13 @@ public class Driver implements IBankDriver {
 	}
 	
 	@Override
-	public bank.IBank getBank(){
+	public bank.Bank getBank(){
 		return bank;
 	}
 
 	/** This Dummy-Bank only contains one account. */
-	static class DummyBank implements IBank  {
-		private final Map<String, IAccount> accounts = new HashMap<String, IAccount>();
+	static class DummyBank implements Bank  {
+		private final Map<String, Account> accounts = new HashMap<String, Account>();
 		{
 			DummyAccount acc = new DummyAccount();
 			accounts.put(acc.getNumber(), acc);
@@ -67,18 +67,18 @@ public class Driver implements IBankDriver {
 		}
 		
 		@Override
-		public IAccount  getAccount(String number){
+		public Account  getAccount(String number){
 			return accounts.get(number);
 		}
 		
 		@Override
-		public void transfer(IAccount a, IAccount b, double amount) {
+		public void transfer(Account a, Account b, double amount) {
 			// since this bank only supports one account, transfer always transfers amount
 			// from one to the same account, thus this empty implementation is correct!
 		}
 	}
 
-	static class DummyAccount implements IAccount {
+	static class DummyAccount implements Account {
 		private String owner = "Dagobert Duck";
 		private String number = "DD-33-4499";
 		private double balance;

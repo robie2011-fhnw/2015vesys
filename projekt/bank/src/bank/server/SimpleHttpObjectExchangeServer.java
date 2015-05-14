@@ -5,7 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 
-import bank.local.Bank;
+import bank.local.BankImpl;
 import bank.server.datainterchange.QueryCommand;
 import bank.server.datainterchange.QueryResult;
 
@@ -17,7 +17,7 @@ import com.sun.net.httpserver.HttpServer;
 public class SimpleHttpObjectExchangeServer {
 	public static void main(String[] args) throws IOException {
 		System.out.println("starting SimpleHttpServer");
-		Bank bank = new Bank();
+		BankImpl bank = new BankImpl();
 		
 		HttpServer s = HttpServer.create(new InetSocketAddress(9999), 0);
 		HttpContext context = s.createContext("/httpServletObjectExchange/oex", new BankHandler(bank));
@@ -27,9 +27,9 @@ public class SimpleHttpObjectExchangeServer {
 	
 	static class BankHandler implements HttpHandler{
 
-		private Bank bank;
+		private BankImpl bank;
 
-		public BankHandler(Bank b){
+		public BankHandler(BankImpl b){
 			this.bank = b;
 			System.out.println("bankhandler init");
 		}

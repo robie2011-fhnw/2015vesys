@@ -12,11 +12,11 @@ import java.io.IOException;
  * and withdraw money. The amounts are always given in Swiss Francs. References
  * to accounts can be obtained over a bank interface.
  * 
- * @see IBank
+ * @see Bank
  * @author Dominik Gruntz
  * @version 3.0
  */
-public interface IAccount {
+public interface Account {
 
 	/**
 	 * Returns the account number.

@@ -12,12 +12,12 @@ import java.io.IOException;
  * The BankDriver2 interface allows the client to register a listener which
  * informs the client about changes.
  * 
- * @see IBank
+ * @see Bank
  * @author Dominik Gruntz
  * @version 3.0
  */
 
-public interface IBankDriver2 extends IBankDriver {
+public interface BankDriver2 extends BankDriver {
 
 	/**
 	 * Registers a update handler. Whenever an account changes (is created,

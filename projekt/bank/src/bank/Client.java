@@ -30,7 +30,7 @@ import bank.gui.BankGUI;
  * java bank.Client bank.sockets.Driver localhost 1234
  * </pre>
  * 
- * @see IBankDriver
+ * @see BankDriver
  * @author Dominik Gruntz
  * @version 3.0
  */
@@ -46,10 +46,10 @@ public final class Client {
 			System.exit(1);
 		}
 
-		IBankDriver server = null;
+		BankDriver server = null;
 		try {
 			Class<?> c = Class.forName(args[0]);
-			server = (IBankDriver) c.newInstance();
+			server = (BankDriver) c.newInstance();
 		} catch (ClassNotFoundException e) {
 			System.out.println("class " + args[0] + " coult not be found");
 			System.exit(1);

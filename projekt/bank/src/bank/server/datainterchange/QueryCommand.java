@@ -1,16 +1,16 @@
 package bank.server.datainterchange;
 
 import java.io.Serializable;
-import bank.IBank;
+import bank.Bank;
 
 public class QueryCommand<TResult> implements Serializable {
-	ICommandNew<TResult> command;
+	Command<TResult> command;
 
-	public QueryCommand(ICommandNew<TResult> cmd){
+	public QueryCommand(Command<TResult> cmd){
 		this.command = cmd;
 	}
 		
-	public QueryResult<TResult> execute(IBank bank){
+	public QueryResult<TResult> execute(Bank bank){
 		TResult result = null;
 		Exception exception = null;
 		try{

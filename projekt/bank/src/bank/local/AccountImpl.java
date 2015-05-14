@@ -5,13 +5,13 @@ import java.io.Serializable;
 import bank.InactiveException;
 import bank.OverdrawException;
 
-public class Account implements bank.IAccount, Serializable {
+public class AccountImpl implements bank.Account, Serializable {
 	private String number;
 	private String owner;
 	private double balance;
 	private boolean active = true;
 
-	Account(String owner, String number) {
+	AccountImpl(String owner, String number) {
 		this.owner = owner;
 		this.number = number;
 	}

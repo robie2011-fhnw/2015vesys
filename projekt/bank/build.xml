@@ -62,6 +62,22 @@
 		</war>
 	</target>
 	
+	<target name="war.httpServlet.restserver" depends="compile">
+		<war warfile="${basedir}/restServer.war" basedir="${bin.dir}"  webxml="${res.dir}/web.xml">
+
+			<!--
+			<classes dir="${bin.dir}" >
+				<include name="bank/server/*.class" />
+				<include name="bank/*.class" />
+				<include name="bank/server/datainterchange/*.class" />
+			</classes>
+			-->
+			<lib dir="libs/jaxrs-ri/api" />
+			<lib dir="libs/jaxrs-ri/ext" />
+			<lib dir="libs/jaxrs-ri/lib" />
+		</war>
+	</target>
+		
 	<target name="HttpObjectExchangeServlet.deploy" depends="httpServlet.objectexchange">
 		<delete>
 			<fileset dir="${tomcat.home}/webapps">
@@ -71,6 +87,18 @@
 		</delete>
 
 		<copy file="${basedir}/httpServletObjectExchange.war" todir="${tomcat.home}/webapps"/>
+	</target>
+	
+	<target name="deploy.RestServerServlet" depends="war.httpServlet.restserver">
+		<delete>
+			<fileset dir="${tomcat.home}/webapps">
+			    <include name="restServer.war"/>
+				<include name="restServer"/>
+			    <exclude name="exclude"/>
+			</fileset>
+			
+		</delete>
+		<copy file="${basedir}/restServer.war" todir="${tomcat.home}/webapps"/>
 	</target>
 	
 	<target name="soap.exportClasses" depends="compile">

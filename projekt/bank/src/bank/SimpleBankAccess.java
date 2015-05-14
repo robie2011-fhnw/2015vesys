@@ -5,7 +5,7 @@ import java.io.IOException;
 import javax.jws.WebService;
 
 @WebService
-public interface ISimpleBankAccess {
+public interface SimpleBankAccess {
 	// ====================================================
 	// bank interface
 	String createAccount(String owner) throws IOException;

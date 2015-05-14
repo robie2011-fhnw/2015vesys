@@ -9,8 +9,8 @@ package bank;
  * The InactiveException is thrown when a bank transaction is called on an
  * closed account.
  * 
- * @see IAccount
- * @see IBank
+ * @see Account
+ * @see Bank
  * @author Dominik Gruntz
  * @version 3.0
  */

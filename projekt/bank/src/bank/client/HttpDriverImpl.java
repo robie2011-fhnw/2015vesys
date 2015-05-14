@@ -5,12 +5,12 @@ import java.io.ObjectOutputStream;
 import java.net.URL;
 
 import sun.net.www.protocol.http.HttpURLConnection;
-import bank.IConnection;
+import bank.Connection;
 import bank.local.Repository;
 import bank.server.datainterchange.QueryCommand;
 import bank.server.datainterchange.QueryResult;
 
-public class HttpDriver extends AbstractDriver {
+public class HttpDriverImpl extends AbstractDriver {
 	String server, port, handler;	
 	
 	@Override
@@ -30,13 +30,13 @@ public class HttpDriver extends AbstractDriver {
 	}
 
 	@Override
-	public bank.IBank getBank() {
+	public bank.Bank getBank() {
 		return bank;
 	}
 
 	@Override
-	IConnection getTransmitter() {
-		return new IConnection() {
+	Connection getTransmitter() {
+		return new Connection() {
 			
 			@Override
 			public <TResult> QueryResult<TResult> executeRemoteQuery(

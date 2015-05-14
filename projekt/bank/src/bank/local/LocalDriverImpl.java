@@ -6,12 +6,12 @@
 package bank.local;
 
 // Test Implementation. Use local bank
-public class Driver implements bank.IBankDriver {
-	private bank.IBank bank = null;
+public class LocalDriverImpl implements bank.BankDriver {
+	private bank.Bank bank = null;
 
 	@Override
 	public void connect(String[] args) {				
-		bank = new Bank();		
+		bank = new BankImpl();		
 	}
 
 	@Override
@@ -21,7 +21,7 @@ public class Driver implements bank.IBankDriver {
 	}
 
 	@Override
-	public bank.IBank getBank() {
+	public bank.Bank getBank() {
 		return bank;
 	}
 

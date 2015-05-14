@@ -1,11 +1,11 @@
 package bank.client;
 
-import bank.IBank;
-import bank.IConnection;
+import bank.Bank;
+import bank.Connection;
 import bank.local.Repository;
 
-public abstract class AbstractDriver implements bank.IBankDriver {
-	protected bank.IBank bank = null;
+public abstract class AbstractDriver implements bank.BankDriver {
+	protected bank.Bank bank = null;
 	protected Repository repository;
 	
 	public String[] getDefaultParams(String[] args){
@@ -29,9 +29,9 @@ public abstract class AbstractDriver implements bank.IBankDriver {
 	@Override
 	public void disconnect(){ System.out.println("disconnecting client"); }
 
-	public IBank getBank(){
+	public Bank getBank(){
 		return bank;
 	}
 
-	abstract IConnection getTransmitter();
+	abstract Connection getTransmitter();
 }

@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import bank.IAccount;
-import bank.IBank;
+import bank.Account;
+import bank.Bank;
 import bank.InactiveException;
 import bank.OverdrawException;
 import bank.client.jaxws.IOException_Exception;
@@ -13,7 +13,7 @@ import bank.client.jaxws.InactiveException_Exception;
 import bank.client.jaxws.OverdrawException_Exception;
 import bank.client.jaxws.SimpleBankAccess;
 
-public class Bank2SimpleBankAccessMapper implements IBank {
+public class Bank2SimpleBankAccessMapper implements Bank {
 	private SimpleBankAccess simpleBankAccess;
 	
 	public Bank2SimpleBankAccessMapper(SimpleBankAccess simpleBankAccess) {
@@ -50,7 +50,7 @@ public class Bank2SimpleBankAccessMapper implements IBank {
 	}
 
 	@Override
-	public IAccount getAccount(String number) throws IOException {
+	public Account getAccount(String number) throws IOException {
 		try {
 			if(!simpleBankAccess.accountExists(number)) return null;
 		} catch (IOException_Exception e) {
@@ -60,7 +60,7 @@ public class Bank2SimpleBankAccessMapper implements IBank {
 	}
 
 	@Override
-	public void transfer(IAccount a, IAccount b, double amount)
+	public void transfer(Account a, Account b, double amount)
 			throws IOException, IllegalArgumentException, OverdrawException,
 			InactiveException {
 		try {
@@ -76,7 +76,7 @@ public class Bank2SimpleBankAccessMapper implements IBank {
 
 	
 	// ******************************************************************
-	public class Account2SimpleBankAccessMapper implements IAccount {
+	public class Account2SimpleBankAccessMapper implements Account {
 		final String accountNr;
 		
 		// not public; should not be created outside of package

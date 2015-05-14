@@ -11,8 +11,8 @@ package bank;
  * than its balance. This exception is declared on the methods withdraw and
  * transfer.
  * 
- * @see IAccount
- * @see IBank
+ * @see Account
+ * @see Bank
  * @author Dominik Gruntz
  * @version 3.0
  */

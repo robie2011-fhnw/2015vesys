@@ -5,7 +5,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import bank.local.Bank;
+import bank.local.BankImpl;
 import bank.server.datainterchange.*;
 
 // Uebung 01
@@ -14,7 +14,7 @@ public class ObjectExchangeServerSocket {
 	public static void main(String[] args) {
 		System.out.println("STARTING SERVER APPLICATION");
 		
-		Bank bank = new Bank();
+		BankImpl bank = new BankImpl();
 		ServerSocket serverSocket;
 		try {
 			serverSocket = new ServerSocket(9999);
@@ -32,7 +32,7 @@ public class ObjectExchangeServerSocket {
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	static void handlingConnection(Socket socket, Bank bank){
+	static void handlingConnection(Socket socket, BankImpl bank){
 		System.out.println("");
 		System.out.println("socket created");
 		System.out.println("===================================");

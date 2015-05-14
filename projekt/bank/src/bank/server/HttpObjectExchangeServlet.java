@@ -9,13 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bank.local.Bank;
+import bank.local.BankImpl;
 import bank.server.datainterchange.QueryCommand;
 import bank.server.datainterchange.QueryResult;
 
 // does not work; Uebung 01
 public class HttpObjectExchangeServlet extends HttpServlet {
-	Bank bank = new Bank();
+	BankImpl bank = new BankImpl();
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {

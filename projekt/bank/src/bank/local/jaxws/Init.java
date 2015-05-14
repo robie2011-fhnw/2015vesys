@@ -13,14 +13,14 @@ import javax.xml.bind.annotation.XmlType;
 public class Init {
 
     @XmlElement(name = "arg0", namespace = "")
-    private bank.IBank arg0;
+    private bank.Bank arg0;
 
     /**
      * 
      * @return
      *     returns IBank
      */
-    public bank.IBank getArg0() {
+    public bank.Bank getArg0() {
         return this.arg0;
     }
 
@@ -29,7 +29,7 @@ public class Init {
      * @param arg0
      *     the value for the arg0 property
      */
-    public void setArg0(bank.IBank arg0) {
+    public void setArg0(bank.Bank arg0) {
         this.arg0 = arg0;
     }
 

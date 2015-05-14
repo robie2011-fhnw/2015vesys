@@ -10,16 +10,16 @@ import bank.InactiveException;
 import bank.OverdrawException;
 
 
-public class Bank implements bank.IBank {
+public class BankImpl implements bank.Bank {
 	private int lastAccountId = 0;
 	
-	private final Map<String, Account> accounts = new HashMap<>();
+	private final Map<String, AccountImpl> accounts = new HashMap<>();
 
 	private synchronized int getNewAccountNumber(){
 		return ++lastAccountId;
 	}
 	
-	public Bank() {
+	public BankImpl() {
 		//createDummyAccounts(); // TODO: Remove
 	}
 	
@@ -27,7 +27,7 @@ public class Bank implements bank.IBank {
 	public Set<String> getAccountNumbers() {			
 		HashSet<String> numbers = new HashSet<String>();
 		
-		for(Account account : accounts.values()){
+		for(AccountImpl account : accounts.values()){
 			if(account.isActive()){
 				numbers.add(account.getNumber());
 			}
@@ -39,7 +39,7 @@ public class Bank implements bank.IBank {
 	@Override
 	public String createAccount(String owner) {
 		String newAccountNumber = Integer.toString(getNewAccountNumber());
-		Account newAccount = new Account(owner, newAccountNumber); 
+		AccountImpl newAccount = new AccountImpl(owner, newAccountNumber); 
 		
 		accounts.put(newAccountNumber , newAccount);
 		return newAccountNumber;
@@ -47,7 +47,7 @@ public class Bank implements bank.IBank {
 
 	@Override
 	public boolean closeAccount(String number) {
-		Account account = accounts.get(number);
+		AccountImpl account = accounts.get(number);
 		
 		if(account == null 
 			|| !account.isActive() 
@@ -61,12 +61,12 @@ public class Bank implements bank.IBank {
 	}
 
 	@Override
-	public bank.IAccount getAccount(String number) {
+	public bank.Account getAccount(String number) {
 		return accounts.get(number);
 	}
 	
 	@Override
-	public void transfer(bank.IAccount from, bank.IAccount to, double amount)
+	public void transfer(bank.Account from, bank.Account to, double amount)
 			throws IOException, InactiveException, OverdrawException {
 		
 		if(!from.isActive() || !to.isActive()) throw new InactiveException();

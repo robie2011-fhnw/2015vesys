@@ -5,13 +5,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import bank.IBank;
-import bank.IConnection;
+import bank.Bank;
+import bank.Connection;
 import bank.local.Repository;
 import bank.server.datainterchange.QueryCommand;
 import bank.server.datainterchange.QueryResult;
 
-public class SocketDriver extends AbstractDriver {
+public class SocketDriverImpl extends AbstractDriver {
 	Socket socket;
 	ObjectOutputStream objectOutputStream;
 	ObjectInputStream objectInputStream;
@@ -27,8 +27,8 @@ public class SocketDriver extends AbstractDriver {
 		}
 	}
 	
-	protected IConnection getTransmitter(){
-		return new IConnection() {					
+	protected Connection getTransmitter(){
+		return new Connection() {					
 			
 			@SuppressWarnings({ "rawtypes", "unchecked" })
 			@Override
@@ -69,7 +69,7 @@ public class SocketDriver extends AbstractDriver {
 	}
 
 	@Override
-	public IBank getBank() {
+	public Bank getBank() {
 		return repository.getBank();
 	}
 

@@ -3,17 +3,17 @@ package bank.local;
 import java.io.IOException;
 import java.util.Set;
 
-import bank.IAccount;
-import bank.IBank;
-import bank.IConnection;
+import bank.Account;
+import bank.Bank;
+import bank.Connection;
 import bank.InactiveException;
 import bank.OverdrawException;
 import bank.server.datainterchange.QueryCommand;
 import bank.server.datainterchange.QueryResult;
 
 public class Repository {
-	private IConnection connection;
-	public Repository(IConnection con){
+	private Connection connection;
+	public Repository(Connection con){
 		try{
 			this.connection = con;
 		}catch(Exception e){ 
@@ -29,12 +29,12 @@ public class Repository {
 		return connection.executeRemoteQuery(query);
 	}
 	
-	public IBank getBank(){
+	public Bank getBank(){
 		return new RemoteBank();
 	}
 
 	
-	class RemoteBank implements bank.IBank{
+	class RemoteBank implements bank.Bank{
 
 		@Override
 		public String createAccount(String owner) throws IOException {
@@ -62,17 +62,17 @@ public class Repository {
 		}
 
 		@Override
-		public IAccount getAccount(String number) throws IOException {
+		public Account getAccount(String number) throws IOException {
 			System.out.println("remote call getAccount");
-			QueryCommand<IAccount> query 
-				= new QueryCommand<IAccount>(bank -> bank.getAccount(number));
-			IAccount account = executeRemoteQuery(query).getResult();
+			QueryCommand<Account> query 
+				= new QueryCommand<Account>(bank -> bank.getAccount(number));
+			Account account = executeRemoteQuery(query).getResult();
 			if(account == null) return null;
 			return new RemoteAccount(account);
 		}
 
 		@Override
-		public void transfer(IAccount a, IAccount b, double amount)
+		public void transfer(Account a, Account b, double amount)
 									throws IOException, IllegalArgumentException,
 									OverdrawException, InactiveException {
 			System.out.println("remote call transfer");
@@ -82,8 +82,8 @@ public class Repository {
 			accountB = b.getNumber();
 			
 			QueryCommand<Boolean> query = new QueryCommand<Boolean>(bank -> {
-				IAccount tmpA = bank.getAccount(accountA);
-				IAccount tmpB = bank.getAccount(accountB);
+				Account tmpA = bank.getAccount(accountA);
+				Account tmpB = bank.getAccount(accountB);
 				bank.transfer(tmpA, tmpB, amount);
 				return false;
 			});
@@ -108,10 +108,10 @@ public class Repository {
 									
 	}
 	
-	class RemoteAccount implements bank.IAccount{
-		bank.IAccount account;		
+	class RemoteAccount implements bank.Account{
+		bank.Account account;		
 		
-		public RemoteAccount(bank.IAccount account) {
+		public RemoteAccount(bank.Account account) {
 			this.account = account;
 		}
 
