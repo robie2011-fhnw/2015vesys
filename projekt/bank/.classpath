@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="res"/>
 	<classpathentry kind="src" path="test">
 		<attributes>
 			<attribute name="ignore_optional_problems" value="true"/>
@@ -11,5 +12,6 @@
 	<classpathentry kind="lib" path="libs/gson-2.3.1.jar"/>
 	<classpathentry kind="lib" path="libs/servlet-api.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jersey"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jms"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

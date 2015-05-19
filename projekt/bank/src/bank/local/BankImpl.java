@@ -1,6 +1,7 @@
 package bank.local;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -10,17 +11,13 @@ import bank.InactiveException;
 import bank.OverdrawException;
 
 
-public class BankImpl implements bank.Bank {
+public class BankImpl implements bank.Bank, Serializable {
 	private int lastAccountId = 0;
 	
 	private final Map<String, AccountImpl> accounts = new HashMap<>();
 
 	private synchronized int getNewAccountNumber(){
 		return ++lastAccountId;
-	}
-	
-	public BankImpl() {
-		//createDummyAccounts(); // TODO: Remove
 	}
 	
 	@Override

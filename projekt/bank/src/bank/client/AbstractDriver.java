@@ -24,12 +24,14 @@ public abstract class AbstractDriver implements bank.BankDriver {
 	public void connect(String[] args){
 		System.out.println("connecting client ...");
 		repository = new Repository(getTransmitter());
+		bank = repository.getBank();
 	}
 
 	@Override
 	public void disconnect(){ System.out.println("disconnecting client"); }
 
 	public Bank getBank(){
+		if(bank == null) connect(null);
 		return bank;
 	}
 

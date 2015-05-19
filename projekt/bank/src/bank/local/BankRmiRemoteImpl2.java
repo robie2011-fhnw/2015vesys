@@ -7,10 +7,9 @@ import java.util.LinkedList;
 import java.util.Set;
 
 import bank.Account;
+import bank.AccountRmiRemote;
 import bank.Bank;
 import bank.BankDriver2.UpdateHandler;
-import bank.AccountRmiRemote;
-import bank.BankRmiRemote;
 import bank.BankRmiRemote2;
 import bank.InactiveException;
 import bank.OverdrawException;
